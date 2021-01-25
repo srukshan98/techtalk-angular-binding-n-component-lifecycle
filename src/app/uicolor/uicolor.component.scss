@@ -1,0 +1,24 @@
+.container {
+  width: 99.9vw;
+  height: 99.9vh;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.centered {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: yellow;
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  transition: background-color 500ms ease-in-out;
+}
