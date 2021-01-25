@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
 
 const colors = [
   'green',
@@ -12,16 +12,23 @@ const colors = [
   templateUrl: './uicolor.component.html',
   styleUrls: ['./uicolor.component.scss']
 })
-export class UIColorComponent implements OnInit {
+export class UIColorComponent implements AfterViewInit, OnChanges {
   @ViewChild('funUI') funUI: ElementRef;
+  @Input() in: number;
 
-  constructor() { }
+  constructor(
+    private renderer: Renderer2
+  ) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    console.log('after view init');
     this.setColor(0);
     this.setRandomColor();
   }
 
+  ngOnChanges(): void {
+    console.log('Change Detected');
+  }
 
   private setRandomColor() {
     setTimeout(() => {
@@ -31,6 +38,10 @@ export class UIColorComponent implements OnInit {
   }
 
   private setColor(color: number) {
-    (this.funUI.nativeElement as HTMLDivElement).style.backgroundColor = colors[color];
+    this.renderer.setStyle(this.funUI.nativeElement, 'backgroundColor', colors[color]);
+  }
+
+  ngOnDestroy(): void {
+    console.log('On Destroy');
   }
 }
