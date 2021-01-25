@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 const colors = [
   'green',
@@ -15,6 +15,8 @@ const colors = [
 export class UIColorComponent implements AfterViewInit, OnChanges {
   @ViewChild('funUI') funUI: ElementRef;
   @Input() in: number;
+  @Output() inChange: EventEmitter<number> = new EventEmitter<number>();
+  num: number = 0;
 
   constructor(
     private renderer: Renderer2
@@ -34,11 +36,13 @@ export class UIColorComponent implements AfterViewInit, OnChanges {
     setTimeout(() => {
       this.setColor(Math.floor((Math.random() * 4) + 1));
       this.setRandomColor();
-    }, Math.floor((Math.random() * 1000) + 1));
+    }, 1000);
   }
 
   private setColor(color: number) {
     this.renderer.setStyle(this.funUI.nativeElement, 'backgroundColor', colors[color]);
+    this.num++;
+    this.inChange.emit(this.num);
   }
 
   ngOnDestroy(): void {
